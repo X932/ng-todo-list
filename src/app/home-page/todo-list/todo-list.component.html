@@ -1,0 +1,13 @@
+<div *ngFor="let todo of todoList" class="list-group-item">
+  <div *ngIf="!todo.isEditing">
+    <a [routerLink]="['/task', todo.id]" routerLinkActive="router-link-active" class="fs-2 link-dark">
+      {{ todo.title }}
+    </a>
+    <div class="fs-5">{{ todo.description }}</div>
+
+    <button class="btn btn-outline-danger m-2" (click)="handleDeleteTodo(todo.id)">Delete</button>
+    <button class="btn btn-outline-primary m-2" (click)="handleEditTodo(todo)">Edit</button>
+  </div>
+
+  <app-edit-task *ngIf="todo.isEditing" [todo]="todo" (todoEmit)="updateTodoList()"></app-edit-task>
+</div>

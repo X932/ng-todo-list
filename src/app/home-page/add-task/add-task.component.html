@@ -1,0 +1,14 @@
+<form class="mt-3" [formGroup]="addingTodoForm" (ngSubmit)="onSubmit()" autocomplete="off">
+
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title" #title autofocus>   
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <input type="text" class="form-control" formControlName="description" id="description" placeholder="Description">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
