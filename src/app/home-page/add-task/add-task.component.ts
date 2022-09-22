@@ -3,8 +3,8 @@ import {
   ElementRef,
   ViewChild,
 } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
-import { FieldValidationService } from "src/app/shared/services/fieldValidation/field-validation.service";
+import { FormBuilder, Validators } from "@angular/forms";
+import { validateField } from "src/app/shared/directives/field-validation.directive";
 import { ListService } from "../../shared/services/listService/list.service";
 
 @Component({
@@ -15,29 +15,42 @@ import { ListService } from "../../shared/services/listService/list.service";
 export class AddTaskComponent {
   @ViewChild("title") inputTitleRef?: ElementRef;
 
-  addingTodoForm = this.formBuilder.group({
+  public titleErrorMessage: string = "";
+
+  private defaultFormValue = {
     id: 0,
     title: "",
     description: "",
     isEditing: false,
+  };
+
+  public addingTodoForm = this.formBuilder.group({
+    id: [0],
+    title: ["", Validators.required],
+    description: [""],
+    isEditing: [false],
   });
 
   constructor(
     private listService: ListService,
-    private formBuilder: FormBuilder,
-    private fieldValidationService: FieldValidationService
+    private formBuilder: FormBuilder
   ) {}
 
-  onSubmit(): void {
-    const validatedForm =
-      this.fieldValidationService.validateFields(
-        this.addingTodoForm
-      );
+  public onSubmit(): void {
+    const validatedForm = validateField(
+      this.addingTodoForm.value
+    );
+    this.addingTodoForm.patchValue(validatedForm);
 
-    if (validatedForm) {
-      this.listService.addTodo(validatedForm);
+    if (this.addingTodoForm.invalid) {
+      this.titleErrorMessage = "Title is required";
       this.inputTitleRef?.nativeElement.focus();
+      return;
     }
-    this.addingTodoForm.reset();
+
+    this.titleErrorMessage = "";
+    this.listService.addTodo(this.addingTodoForm.value);
+    this.inputTitleRef?.nativeElement.focus();
+    this.addingTodoForm.reset(this.defaultFormValue);
   }
 }

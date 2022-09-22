@@ -2,8 +2,12 @@
 
   <div class="mb-3">
     <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title">   
+
+    <div class="text-danger text-start" *ngIf="titleErrorMessage">
+      {{ titleErrorMessage }}
+    </div>
   </div>
-  
+
   <div class="mb-3">
     <input type="text" class="form-control" formControlName="description" id="description" placeholder="Description">
   </div>

@@ -6,7 +6,7 @@ import {
   Output,
 } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
-import { FieldValidationService } from "src/app/shared/services/fieldValidation/field-validation.service";
+import { validateField } from "src/app/shared/directives/field-validation.directive";
 import {
   ITodo,
   ListService,
@@ -20,8 +20,7 @@ import {
 export class EditTaskComponent implements OnChanges {
   constructor(
     private formBuilder: FormBuilder,
-    private listService: ListService,
-    private fieldValidationService: FieldValidationService
+    private listService: ListService
   ) {}
 
   @Output() todoEmit = new EventEmitter();
@@ -32,19 +31,24 @@ export class EditTaskComponent implements OnChanges {
     isEditing: false,
   };
 
+  titleErrorMessage: string = "";
+
   editingTodoForm = this.formBuilder.group(this.todo);
 
   changeTodo(): void {
-    const validatedForm =
-      this.fieldValidationService.validateFields(
-        this.editingTodoForm
-      );
+    const validatedForm = validateField(
+      this.editingTodoForm.value
+    );
 
-    if (validatedForm) {
-      this.listService.editTodo(validatedForm);
-      this.editingTodoForm.value.isEditing = false;
-      this.todoEmit.emit();
+    if (this.editingTodoForm.invalid || !validatedForm) {
+      this.titleErrorMessage = "Title is required";
+      return;
     }
+
+    this.titleErrorMessage = "";
+    this.listService.editTodo(this.editingTodoForm.value);
+    this.editingTodoForm.value.isEditing = false;
+    this.todoEmit.emit();
   }
 
   ngOnChanges(): void {

@@ -1,16 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import {
-  ITodo,
-  ListService,
-} from "../shared/services/listService/list.service";
-
+import { Component } from "@angular/core";
+import { HomeService } from "./home.service";
 @Component({
   selector: "app-home-page",
   templateUrl: "./home-page.component.html",
   styleUrls: ["./home-page.component.scss"],
 })
 export class HomePageComponent {
-  constructor(private listService: ListService) {}
-
-  // todoList: ITodo[] = this.listService.getTodoList();
+  constructor(private homeService: HomeService) {
+    homeService.getHomePage();
+  }
 }

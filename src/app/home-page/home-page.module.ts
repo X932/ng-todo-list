@@ -7,6 +7,7 @@ import { ListService } from "../shared/services/listService/list.service";
 import { EditTaskComponent } from "./todo-list/edit-task/edit-task.component";
 import { AppRoutingModule } from "../app-routing.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { HomeService } from "./home.service";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,6 @@ import { ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule,
     AppRoutingModule,
   ],
-  providers: [ListService],
+  providers: [ListService, HomeService],
 })
 export class HomePageModule {}

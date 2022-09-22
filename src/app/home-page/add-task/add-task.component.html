@@ -3,6 +3,10 @@
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
     <input type="text" formControlName="title" class="form-control" id="title" placeholder="Title" #title autofocus>   
+    
+    <div class="text-danger" *ngIf="titleErrorMessage">
+      {{ titleErrorMessage }}
+    </div>
   </div>
 
   <div class="mb-3">

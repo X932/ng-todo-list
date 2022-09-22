@@ -5,8 +5,10 @@
     </a>
     <div class="fs-5">{{ todo.description }}</div>
 
-    <button class="btn btn-outline-danger m-2" (click)="handleDeleteTodo(todo.id)">Delete</button>
-    <button class="btn btn-outline-primary m-2" (click)="handleEditTodo(todo)">Edit</button>
+  <div class="d-flex gap-3 mt-3 col-2">
+    <button class="btn btn-outline-danger" (click)="handleDeleteTodo(todo.id)">Delete</button>
+    <button class="btn btn-outline-primary" (click)="handleEditTodo(todo)">Edit</button>
+  </div>
   </div>
 
   <app-edit-task *ngIf="todo.isEditing" [todo]="todo" (todoEmit)="updateTodoList()"></app-edit-task>

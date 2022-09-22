@@ -18,7 +18,6 @@ import {
 export class TodoListComponent {
   constructor(private listService: ListService) {}
 
-  // @Input() todoList: ITodo[] = [];
   todoList: ITodo[] = this.listService.getTodoList();
 
   updateTodoList(): void {
